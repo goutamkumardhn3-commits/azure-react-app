@@ -1,9 +1,27 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
   const [count, setCount] = useState(0);
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    async function fetchItems() {
+      const data = await getItems();
+      setItems(data);
+    }
+
+    fetchItems();
+  }, []);
+  const API_URL = import.meta.env.VITE_API_BASE_URL;
+
+async function getItems() {
+  const response = await fetch(`${API_URL}/products`);
+  const data = await response.json();
+
+  return data;
+}
 
   return (
     <div className="container">
@@ -36,6 +54,15 @@ function App() {
           <p>Vite</p>
           <p>JavaScript</p>
           <p>Azure Static Web Apps</p>
+        </div>
+
+        <div className="card">
+          <h2>Products</h2>
+          <ul>
+            {items.map((item) => (
+              <li key={item.id}>{item.name}</li>
+            ))}
+          </ul>
         </div>
       </section>
 
