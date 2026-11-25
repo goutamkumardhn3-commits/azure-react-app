@@ -60,7 +60,7 @@ async function getItems() {
           <h2>Products</h2>
           <ul>
             {items.map((item) => (
-              <li key={item.id}>{item.name}</li>
+              <li key={item.id}>{item.title}</li>
             ))}
           </ul>
         </div>
