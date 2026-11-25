@@ -1,75 +1,42 @@
 
-import { useState, useEffect } from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  NavLink
+} from "react-router-dom";
+
+import Dashboard from "./pages/Dashboard";
+import Items from "./pages/Items";
+import Profile from "./pages/Profile";
+
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    async function fetchItems() {
-      const data = await getItems();
-      setItems(data);
-    }
-
-    fetchItems();
-  }, []);
-  const API_URL = import.meta.env.VITE_API_BASE_URL;
-
-async function getItems() {
-  const response = await fetch(`${API_URL}/products`);
-  const data = await response.json();
-
-  return data;
-}
-
   return (
-    <div className="container">
-      <header>
-        <h1>Azure React Dashboard</h1>
-        <p>Welcome to my first Azure frontend application.</p>
-      </header>
+    <BrowserRouter>
+      <div className="container">
 
-      <section className="dashboard">
-        <div className="card">
-          <h2>React Counter</h2>
+        <nav className="navbar">
+          <h2>My Azure App</h2>
 
-          <h1>{count}</h1>
+          <div className="nav-links">
+            <NavLink to="/" end>Dashboard</NavLink>
+            <NavLink to="/items">Items</NavLink>
+            <NavLink to="/profile">Profile</NavLink>
+          </div>
+        </nav>
 
-          <button onClick={() => setCount(count + 1)}>
-            Increment
-          </button>
+        <main>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/items" element={<Items />} />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
+        </main>
 
-          <button
-            className="reset"
-            onClick={() => setCount(0)}
-          >
-            Reset
-          </button>
-        </div>
-
-        <div className="card">
-          <h2>Technology Stack</h2>
-          <p>React JS</p>
-          <p>Vite</p>
-          <p>JavaScript</p>
-          <p>Azure Static Web Apps</p>
-        </div>
-
-        <div className="card">
-          <h2>Products</h2>
-          <ul>
-            {items.map((item) => (
-              <li key={item.id}>{item.title}</li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <footer>
-        Built with React JS + Vite
-      </footer>
-    </div>
+      </div>
+    </BrowserRouter>
   );
 }
 
