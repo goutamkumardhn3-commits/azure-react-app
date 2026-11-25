@@ -5,7 +5,16 @@ import viteLogo from './assets/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  const API_URL = import.meta.env.VITE_API_BASE_URL;
+
+  async function getItems() {
+  const response = await fetch(`${API_URL}/products`);
+
+  const data = await response.json();
+
+  console.log(data);
+}
 
   return (
     <>
@@ -16,7 +25,7 @@ function App() {
           <img src={viteLogo} className="vite" alt="Vite logo" />
         </div>
         <div>
-          <h1>Get started</h1>
+          <h1>My React Application - Version 2</h1>
           <p>
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
